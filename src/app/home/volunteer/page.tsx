@@ -9,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
-import { Calendar, Search, Users, Heart, Bell, User, MapPin, Clock, Award, ChevronRight, Settings, LogOut, Edit, Camera, MessageCircle, Send, Moon, Sun, ArrowLeft, Share2, ExternalLink } from 'lucide-react'
+import { Calendar, Search, Users, Heart, User, MapPin, Clock, Settings, LogOut, Camera, MessageCircle, Send, Moon, Sun, ArrowLeft, Share2, ExternalLink } from 'lucide-react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,7 +19,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { motion, AnimatePresence } from 'framer-motion'
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle,  } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 
@@ -199,7 +199,7 @@ export default function Component() {
     { id: 2, name: "María González", lastMessage: "Gracias por tu ayuda ayer", time: "Ayer" },
     { id: 3, name: "Equipo Maratón", lastMessage: "La ruta está lista para mañana", time: "Lun" },
   ]
-  
+
   const renderLogo = () => (
     <motion.h1 
       className="text-xl font-bold px-4 py-2 rounded"
