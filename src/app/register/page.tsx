@@ -64,7 +64,7 @@ export default function RegisterPage() {
         })
       }
       setDialogOpen(true)
-      setTimeout(() => router.push('/login'), 3000)
+      setTimeout(() => router.push('/'), 3000)
     } catch (error) {
       setDialogContent({
         title: "Error",
@@ -315,7 +315,7 @@ export default function RegisterPage() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.8 }}
         >
-          <Link href="/login" className="text-sm text-blue-400 hover:underline">
+          <Link href="/" className="text-sm text-blue-400 hover:underline">
             ¿Ya tienes una cuenta? Inicia sesión
           </Link>
         </motion.div>
