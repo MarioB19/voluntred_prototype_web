@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Calendar } from "@/components/ui/calendar"
 import { CalendarIcon, Clock, MapPin, Users, Edit, Copy, Trash2, MessageCircle, Plus, Eye } from 'lucide-react'
 import { format } from "date-fns"
+import { Grid, History, FileText } from 'lucide-react'
 
 interface Event {
   id: number
@@ -30,6 +31,7 @@ interface Event {
   status: 'draft' | 'published'
 }
 
+// Mock data (unchanged)
 const mockEvents: Event[] = [
   {
     id: 1,
@@ -211,21 +213,33 @@ const NGOEventManagement = () => {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-white">Gestión de Eventos</h2>
-        <Button onClick={() => setIsCreateEventOpen(true)} className="bg-green-500 hover:bg-green-600">
+    <div className="space-y-4 p-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <h2 className="text-xl sm:text-2xl font-bold text-white">Gestión de Eventos</h2>
+        <Button onClick={() => setIsCreateEventOpen(true)} className="bg-green-500 hover:bg-green-600 w-full sm:w-auto">
           <Plus className="mr-2 h-4 w-4" /> Crear Evento
         </Button>
       </div>
 
       <Tabs defaultValue="all" className="w-full">
-        <TabsList className="grid w-full grid-cols-4 bg-gray-800">
-          <TabsTrigger value="all" onClick={() => setActiveTab("all")}>Todos</TabsTrigger>
-          <TabsTrigger value="upcoming" onClick={() => setActiveTab("upcoming")}>Próximos</TabsTrigger>
-          <TabsTrigger value="past" onClick={() => setActiveTab("past")}>Pasados</TabsTrigger>
-          <TabsTrigger value="draft" onClick={() => setActiveTab("draft")}>Borradores</TabsTrigger>
-        </TabsList>
+      <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 bg-gray-800">
+  <TabsTrigger value="all" onClick={() => setActiveTab("all")}>
+    <Grid className="h-5 w-5" />
+    <span className="sr-only">Todos</span>
+  </TabsTrigger>
+  <TabsTrigger value="upcoming" onClick={() => setActiveTab("upcoming")}>
+    <CalendarIcon className="h-5 w-5" />
+    <span className="sr-only">Próximos</span>
+  </TabsTrigger>
+  <TabsTrigger value="past" onClick={() => setActiveTab("past")}>
+    <History className="h-5 w-5" />
+    <span className="sr-only">Pasados</span>
+  </TabsTrigger>
+  <TabsTrigger value="draft" onClick={() => setActiveTab("draft")}>
+    <FileText className="h-5 w-5" />
+    <span className="sr-only">Borradores</span>
+  </TabsTrigger>
+</TabsList>
         <TabsContent value="all" className="mt-4">
           <EventList events={mockEvents} />
         </TabsContent>
@@ -241,7 +255,7 @@ const NGOEventManagement = () => {
       </Tabs>
 
       <Dialog open={isCreateEventOpen} onOpenChange={setIsCreateEventOpen}>
-        <DialogContent className="bg-gray-900 text-white border border-gray-700 max-w-4xl">
+        <DialogContent className="bg-gray-900 text-white border border-gray-700 max-w-lg sm:max-w-2xl md:max-w-4xl">
           <DialogHeader>
             <DialogTitle>Crear Nuevo Evento</DialogTitle>
             <DialogDescription>
@@ -257,26 +271,26 @@ const NGOEventManagement = () => {
 
 const EventList = ({ events }: { events: Event[] }) => {
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {events.map((event) => (
         <Card key={event.id} className="bg-gray-800 border-gray-700">
           <CardHeader>
-            <CardTitle className="text-lg font-semibold text-white">{event.title}</CardTitle>
+            <CardTitle className="text-base sm:text-lg font-semibold text-white">{event.title}</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-gray-400 flex items-center">
-              <CalendarIcon className="mr-2 h-4 w-4" /> {format(event.date, 'dd/MM/yyyy')}
+            <p className="text-xs sm:text-sm text-gray-400 flex items-center">
+              <CalendarIcon className="mr-2 h-3 w-3 sm:h-4 sm:w-4" /> {format(event.date, 'dd/MM/yyyy')}
             </p>
-            <p className="text-sm text-gray-400 flex items-center mt-1">
-              <Clock className="mr-2 h-4 w-4" /> {event.time}
+            <p className="text-xs sm:text-sm text-gray-400 flex items-center mt-1">
+              <Clock className="mr-2 h-3 w-3 sm:h-4 sm:w-4" /> {event.time}
             </p>
-            <p className="text-sm text-gray-400 flex items-center mt-1">
-              <MapPin className="mr-2 h-4 w-4" /> {event.location}
+            <p className="text-xs sm:text-sm text-gray-400 flex items-center mt-1">
+              <MapPin className="mr-2 h-3 w-3 sm:h-4 sm:w-4" /> {event.location}
             </p>
-            <p className="text-sm text-gray-400 flex items-center mt-1">
-              <Users className="mr-2 h-4 w-4" /> {event.participants} participantes
+            <p className="text-xs sm:text-sm text-gray-400 flex items-center mt-1">
+              <Users className="mr-2 h-3 w-3 sm:h-4 sm:w-4" /> {event.participants} participantes
             </p>
-            <div className="mt-2 flex space-x-2">
+            <div className="mt-2 flex flex-wrap gap-2">
               <span className="px-2 py-1 rounded-full text-xs bg-blue-500 text-white">
                 {event.category}
               </span>
@@ -287,21 +301,21 @@ const EventList = ({ events }: { events: Event[] }) => {
               )}
             </div>
           </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button variant="outline" size="sm" className="text-blue-400 border-blue-400 hover:bg-blue-400 hover:text-white">
-              <Eye className="mr-2 h-4 w-4" /> Ver
+          <CardFooter className="flex flex-wrap justify-start gap-2">
+            <Button variant="outline" size="sm" className="text-blue-400 border-blue-400 hover:bg-blue-400 hover:text-white text-xs">
+              <Eye className="mr-1 h-3 w-3" /> Ver
             </Button>
-            <Button variant="outline" size="sm" className="text-green-400 border-green-400 hover:bg-green-400 hover:text-white">
-              <Edit  className="mr-2 h-4 w-4" /> Editar
+            <Button variant="outline" size="sm" className="text-green-400 border-green-400 hover:bg-green-400 hover:text-white text-xs">
+              <Edit className="mr-1 h-3 w-3" /> Editar
             </Button>
-            <Button variant="outline" size="sm" className="text-yellow-400 border-yellow-400 hover:bg-yellow-400 hover:text-white">
-              <Copy className="mr-2 h-4 w-4" /> Duplicar
+            <Button variant="outline" size="sm" className="text-yellow-400 border-yellow-400 hover:bg-yellow-400 hover:text-white text-xs">
+              <Copy className="mr-1 h-3 w-3" /> Duplicar
             </Button>
-            <Button variant="outline" size="sm" className="text-red-400 border-red-400 hover:bg-red-400 hover:text-white">
-              <Trash2 className="mr-2 h-4 w-4" /> Eliminar
+            <Button variant="outline" size="sm" className="text-red-400 border-red-400 hover:bg-red-400 hover:text-white text-xs">
+              <Trash2 className="mr-1 h-3 w-3" /> Eliminar
             </Button>
-            <Button variant="outline" size="sm" className="text-purple-400 border-purple-400 hover:bg-purple-400 hover:text-white">
-              <MessageCircle className="mr-2 h-4 w-4" /> Chats
+            <Button variant="outline" size="sm" className="text-purple-400 border-purple-400 hover:bg-purple-400 hover:text-white text-xs">
+              <MessageCircle className="mr-1 h-3 w-3" /> Chats
             </Button>
           </CardFooter>
         </Card>
@@ -353,19 +367,19 @@ const NGOCreateEvent = ({ onClose }: { onClose: () => void }) => {
         return (
           <div className="space-y-4">
             <div>
-              <Label htmlFor="title">Título del Evento</Label>
-              <Input id="title" name="title" value={eventData.title} onChange={handleInputChange} className="bg-gray-800 border-gray-700 text-white" />
+              <Label htmlFor="title" className="text-sm">Título del Evento</Label>
+              <Input id="title" name="title" value={eventData.title} onChange={handleInputChange} className="bg-gray-800 border-gray-700 text-white text-sm" />
             </div>
             <div>
-              <Label htmlFor="category">Categoría</Label>
-              <Input id="category" name="category" value={eventData.category} onChange={handleInputChange} className="bg-gray-800 border-gray-700 text-white" />
+              <Label htmlFor="category" className="text-sm">Categoría</Label>
+              <Input id="category" name="category" value={eventData.category} onChange={handleInputChange} className="bg-gray-800 border-gray-700 text-white text-sm" />
             </div>
             <div>
-              <Label htmlFor="description">Descripción Detallada</Label>
-              <Textarea id="description" name="description" value={eventData.description} onChange={handleInputChange} className="bg-gray-800 border-gray-700 text-white" />
+              <Label htmlFor="description" className="text-sm">Descripción Detallada</Label>
+              <Textarea id="description" name="description" value={eventData.description} onChange={handleInputChange} className="bg-gray-800 border-gray-700 text-white text-sm" />
             </div>
             <div>
-              <Label>Fecha del Evento</Label>
+              <Label className="text-sm">Fecha del Evento</Label>
               <Calendar
                 mode="single"
                 selected={eventData.date}
@@ -374,16 +388,16 @@ const NGOCreateEvent = ({ onClose }: { onClose: () => void }) => {
               />
             </div>
             <div>
-              <Label htmlFor="time">Hora del Evento</Label>
-              <Input type="time" id="time" name="time" value={eventData.time} onChange={handleInputChange} className="bg-gray-800 border-gray-700 text-white" />
+              <Label htmlFor="time" className="text-sm">Hora del Evento</Label>
+              <Input type="time" id="time" name="time" value={eventData.time} onChange={handleInputChange} className="bg-gray-800 border-gray-700 text-white text-sm" />
             </div>
             <div>
-              <Label htmlFor="location">Ubicación</Label>
-              <Input id="location" name="location" value={eventData.location} onChange={handleInputChange} className="bg-gray-800 border-gray-700 text-white" />
+              <Label htmlFor="location" className="text-sm">Ubicación</Label>
+              <Input id="location" name="location" value={eventData.location} onChange={handleInputChange} className="bg-gray-800 border-gray-700 text-white text-sm" />
             </div>
             <div>
-              <Label htmlFor="ods">ODS Alineado</Label>
-              <Input id="ods" name="ods" value={eventData.ods} onChange={handleInputChange} className="bg-gray-800 border-gray-700 text-white" />
+              <Label htmlFor="ods" className="text-sm">ODS Alineado</Label>
+              <Input id="ods" name="ods" value={eventData.ods} onChange={handleInputChange} className="bg-gray-800 border-gray-700 text-white text-sm" />
             </div>
           </div>
         )
@@ -391,34 +405,34 @@ const NGOCreateEvent = ({ onClose }: { onClose: () => void }) => {
         return (
           <div className="space-y-4">
             <div>
-              <Label htmlFor="objectives">Objetivos (separados por comas)</Label>
+              <Label htmlFor="objectives" className="text-sm">Objetivos (separados por comas)</Label>
               <Textarea 
                 id="objectives" 
                 name="objectives" 
                 value={eventData.objectives?.join(', ')} 
                 onChange={(e) => setEventData(prevData => ({ ...prevData, objectives: e.target.value.split(',').map(item => item.trim()) }))}
-                className="bg-gray-800 border-gray-700 text-white" 
+                className="bg-gray-800 border-gray-700 text-white text-sm" 
               />
             </div>
             <div>
-              <Label htmlFor="requirements">Requisitos (separados por comas)</Label>
+              <Label htmlFor="requirements" className="text-sm">Requisitos (separados por comas)</Label>
               <Textarea 
                 id="requirements" 
                 name="requirements" 
                 value={eventData.requirements?.join(', ')} 
                 onChange={(e) => setEventData(prevData => ({ ...prevData, requirements: e.target.value.split(',').map(item => item.trim()) }))}
-                className="bg-gray-800 border-gray-700 text-white" 
+                className="bg-gray-800 border-gray-700 text-white text-sm" 
               />
             </div>
             <div>
-              <Label htmlFor="participants">Número de Participantes</Label>
+              <Label htmlFor="participants" className="text-sm">Número de Participantes</Label>
               <Input 
                 type="number" 
                 id="participants" 
                 name="participants" 
                 value={eventData.participants} 
                 onChange={(e) => setEventData(prevData => ({ ...prevData, participants: parseInt(e.target.value) || 0 }))}
-                className="bg-gray-800 border-gray-700 text-white" 
+                className="bg-gray-800 border-gray-700 text-white text-sm" 
               />
             </div>
           </div>
@@ -427,38 +441,38 @@ const NGOCreateEvent = ({ onClose }: { onClose: () => void }) => {
         return (
           <div className="space-y-4">
             <div>
-              <Label>Coordenadas</Label>
+              <Label className="text-sm">Coordenadas</Label>
               <div className="grid grid-cols-2 gap-4">
                 <Input 
                   type="number" 
                   placeholder="Latitud" 
                   value={eventData.coordinates?.lat}
-               //   onChange={(e) => setEventData(prevData => ({ ...prevData, coordinates: { ...prevData.coordinates, lat: parseFloat(e.target.value) || 0 } }))}
-                  className="bg-gray-800 border-gray-700 text-white"
+                //  onChange={(e) => setEventData(prevData => ({ ...prevData, coordinates: { ...prevData.coordinates, lat: parseFloat(e.target.value) || 0 } }))}
+                  className="bg-gray-800 border-gray-700 text-white text-sm"
                 />
                 <Input 
                   type="number" 
                   placeholder="Longitud"
                   value={eventData.coordinates?.lng}
-                 // onChange={(e) => setEventData(prevData => ({ ...prevData, coordinates: { ...prevData.coordinates, lng: parseFloat(e.target.value) || 0 } }))}
-                  className="bg-gray-800 border-gray-700 text-white"
+               //   onChange={(e) => setEventData(prevData => ({ ...prevData, coordinates: { ...prevData.coordinates, lng: parseFloat(e.target.value) || 0 } }))}
+                  className="bg-gray-800 border-gray-700 text-white text-sm"
                 />
               </div>
             </div>
             <div>
-              <Label>Patrocinadores</Label>
+              <Label className="text-sm">Patrocinadores</Label>
               <div className="space-y-2">
                 {eventData.sponsors?.map((sponsor, index) => (
-                  <div key={index} className="flex space-x-2">
+                  <div key={index} className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
                     <Input 
-                      placeholder="Nombre del patrocinador"
+                      placeholder="Nombre  del patrocinador"
                       value={sponsor.name}
                       onChange={(e) => {
                         const newSponsors = [...(eventData.sponsors || [])]
                         newSponsors[index] = { ...newSponsors[index], name: e.target.value }
                         setEventData(prevData => ({ ...prevData, sponsors: newSponsors }))
                       }}
-                      className="bg-gray-800 border-gray-700 text-white"
+                      className="bg-gray-800 border-gray-700 text-white text-sm"
                     />
                     <Input 
                       placeholder="URL de la imagen"
@@ -468,14 +482,14 @@ const NGOCreateEvent = ({ onClose }: { onClose: () => void }) => {
                         newSponsors[index] = { ...newSponsors[index], image: e.target.value }
                         setEventData(prevData => ({ ...prevData, sponsors: newSponsors }))
                       }}
-                      className="bg-gray-800 border-gray-700 text-white"
+                      className="bg-gray-800 border-gray-700 text-white text-sm"
                     />
                   </div>
                 ))}
                 <Button 
                   type="button" 
                   onClick={() => setEventData(prevData => ({ ...prevData, sponsors: [...(prevData.sponsors || []), { name: '', image: '' }] }))}
-                  className="bg-blue-500 hover:bg-blue-600"
+                  className="bg-blue-500 hover:bg-blue-600 text-sm"
                 >
                   Agregar Patrocinador
                 </Button>
@@ -488,25 +502,25 @@ const NGOCreateEvent = ({ onClose }: { onClose: () => void }) => {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold">Vista Previa del Evento</h3>
             <div className="bg-gray-800 p-4 rounded-lg">
-              <h4 className="text-xl font-bold">{eventData.title}</h4>
-              <p className="text-gray-400 mt-2">{eventData.description}</p>
+              <h4 className="text-lg sm:text-xl font-bold">{eventData.title}</h4>
+              <p className="text-gray-400 mt-2 text-sm">{eventData.description}</p>
               <div className="mt-4 space-y-2">
-                <p className="flex items-center"><CalendarIcon className="mr-2" /> {eventData.date ? format(eventData.date, 'dd/MM/yyyy') : 'Fecha no seleccionada'}</p>
-                <p className="flex items-center"><Clock className="mr-2" /> {eventData.time}</p>
-                <p className="flex items-center"><MapPin className="mr-2" /> {eventData.location}</p>
-                <p className="flex items-center"><Users className="mr-2" /> {eventData.participants} participantes</p>
+                <p className="flex items-center text-sm"><CalendarIcon className="mr-2 h-4 w-4" /> {eventData.date ? format(eventData.date, 'dd/MM/yyyy') : 'Fecha no seleccionada'}</p>
+                <p className="flex items-center text-sm"><Clock className="mr-2 h-4 w-4" /> {eventData.time}</p>
+                <p className="flex items-center text-sm"><MapPin className="mr-2 h-4 w-4" /> {eventData.location}</p>
+                <p className="flex items-center text-sm"><Users className="mr-2 h-4 w-4" /> {eventData.participants} participantes</p>
               </div>
             </div>
-            <div className="flex space-x-4">
+            <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
               <Button 
                 variant="outline" 
-                className="flex-1"
+                className="flex-1 text-sm"
                 onClick={() => setEventData(prevData => ({ ...prevData, status: 'draft' }))}
               >
                 Guardar como Borrador
               </Button>
               <Button 
-                className="flex-1 bg-green-500 hover:bg-green-600"
+                className="flex-1 bg-green-500 hover:bg-green-600 text-sm"
                 onClick={() => setEventData(prevData => ({ ...prevData, status: 'published' }))}
               >
                 Publicar Ahora
@@ -520,20 +534,20 @@ const NGOCreateEvent = ({ onClose }: { onClose: () => void }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
+    <form onSubmit={handleSubmit} className="space-y-6">
       {renderStep()}
-      <div className="flex justify-between mt-6">
+      <div className="flex flex-col sm:flex-row justify-between mt-6 space-y-2 sm:space-y-0">
         {step > 1 && (
-          <Button type="button" onClick={() => setStep(step - 1)} variant="outline">
+          <Button type="button" onClick={() => setStep(step - 1)} variant="outline" className="text-sm">
             Anterior
           </Button>
         )}
         {step < 4 ? (
-          <Button type="button" onClick={() => setStep(step + 1)} className="ml-auto">
+          <Button type="button" onClick={() => setStep(step + 1)} className="ml-auto text-sm">
             Siguiente
           </Button>
         ) : (
-          <Button type="submit" className="ml-auto bg-green-500 hover:bg-green-600">
+          <Button type="submit" className="ml-auto bg-green-500 hover:bg-green-600 text-sm">
             Finalizar
           </Button>
         )}

@@ -15,6 +15,9 @@ import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Search, Send, FileText, MessageCircle } from 'lucide-react'
 
+import { Users, Inbox, Activity } from 'lucide-react'
+
+
 // Mock data (unchanged)
 const suggestedCompanies = [
   { id: 1, name: "EcoTech Solutions", sector: "Tecnología", location: "Ciudad de México", ods: ["9. Industria, Innovación e Infraestructura", "13. Acción por el Clima"] },
@@ -45,13 +48,28 @@ const NGOCollaborations = () => {
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-white">Colaboraciones y Patrocinios</h2>
       <Tabs defaultValue="collaborations" className="w-full">
-        <TabsList className="grid w-full grid-cols-5 bg-gray-800">
-          <TabsTrigger value="collaborations" onClick={() => setActiveTab("collaborations")}>Colaboraciones</TabsTrigger>
-          <TabsTrigger value="proposals" onClick={() => setActiveTab("proposals")}>Propuestas</TabsTrigger>
-          <TabsTrigger value="sent" onClick={() => setActiveTab("sent")}>Enviadas</TabsTrigger>
-          <TabsTrigger value="received" onClick={() => setActiveTab("received")}>Recibidas</TabsTrigger>
-          <TabsTrigger value="active" onClick={() => setActiveTab("active")}>Activos</TabsTrigger>
-        </TabsList>
+      <TabsList className="grid w-full grid-cols-5 bg-gray-800">
+        <TabsTrigger value="collaborations" onClick={() => setActiveTab("collaborations")}>
+          <Users className="h-5 w-5" />
+          <span className="sr-only">Colaboraciones</span>
+        </TabsTrigger>
+        <TabsTrigger value="proposals" onClick={() => setActiveTab("proposals")}>
+          <FileText className="h-5 w-5" />
+          <span className="sr-only">Propuestas</span>
+        </TabsTrigger>
+        <TabsTrigger value="sent" onClick={() => setActiveTab("sent")}>
+          <Send className="h-5 w-5" />
+          <span className="sr-only">Enviadas</span>
+        </TabsTrigger>
+        <TabsTrigger value="received" onClick={() => setActiveTab("received")}>
+          <Inbox className="h-5 w-5" />
+          <span className="sr-only">Recibidas</span>
+        </TabsTrigger>
+        <TabsTrigger value="active" onClick={() => setActiveTab("active")}>
+          <Activity className="h-5 w-5" />
+          <span className="sr-only">Activos</span>
+        </TabsTrigger>
+      </TabsList>
         <TabsContent value="collaborations" className="mt-4">
           <CollaborationsPanel />
         </TabsContent>
