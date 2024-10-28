@@ -25,7 +25,7 @@ const pageTransition = {
   exit: { opacity: 0, y: -20 },
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function VolunteerHomePage(){
   const [activePage, setActivePage] = useState("dashboard")
   const [isScrolled, setIsScrolled] = useState(false)
 
