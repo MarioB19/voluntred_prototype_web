@@ -3,27 +3,27 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Calendar, MapPin, Users, Clock, Target, Building, ArrowLeft } from "lucide-react"
+import {
+  Calendar as CalendarIcon,
+  MapPin,
+  Users,
+  Clock,
+  Target,
+  Building,
+  ArrowLeft,
+} from "lucide-react"
+import { Event } from "@/lib/types"
 
 interface EventDetailProps {
-  event: {
-    id: number
-    title: string
-    category: string
-    location: string
-    date: string
-    time: string
-    ong: string
-    ods: string
-    description: string
-    objectives: string[]
-    requirements: string[]
-    participants: number
-    coordinates: { lat: number; lng: number }
-    sponsors: Array<{ name: string; image: string }>;
-  }
+  event: Event
   onBack: () => void
 }
 
@@ -64,14 +64,14 @@ export default function EventDetail({ event, onBack }: EventDetailProps) {
           </Badge>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex items-center text-blue-300">
               <MapPin className="mr-2 h-4 w-4" />
               {event.location}
             </div>
             <div className="flex items-center text-blue-300">
-              <Calendar className="mr-2 h-4 w-4" />
-              {new Date(event.date).toLocaleDateString()}
+              <CalendarIcon className="mr-2 h-4 w-4" />
+              {event.date.toLocaleDateString()}
             </div>
             <div className="flex items-center text-blue-300">
               <Clock className="mr-2 h-4 w-4" />
@@ -114,33 +114,19 @@ export default function EventDetail({ event, onBack }: EventDetailProps) {
             </ul>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="space-y-4"
-          >
-            <h3 className="text-xl font-semibold text-green-400 mb-2">Patrocinadores</h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {event.sponsors.map((sponsor, index) => (
-                <motion.div
-                  key={index}
-                  whileHover={{ scale: 1.05 }}
-                  className="flex flex-col items-center bg-gray-800 rounded-lg p-4 transition-all duration-300 hover:bg-gray-700"
-                >
-                  <img src={sponsor.image} alt={sponsor.name} className="w-24 h-24 object-contain mb-2" />
-                  <span className="text-sm font-medium text-blue-300 text-center">{sponsor.name}</span>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
           <div>
             <h3 className="text-lg font-semibold text-green-400 mb-2">Patrocinadores</h3>
             <div className="flex flex-wrap gap-4">
               {event.sponsors.map((sponsor, index) => (
-                <div key={index} className="flex items-center bg-gray-800 rounded p-2">
-                  <img src={sponsor.image} alt={sponsor.name} className="w-16 h-8 object-contain mr-2" />
+                <div
+                  key={index}
+                  className="flex items-center bg-gray-800 rounded p-2 hover:bg-gray-700 transition-colors"
+                >
+                  <img
+                    src={sponsor.image}
+                    alt={sponsor.name}
+                    className="w-16 h-8 object-contain mr-2"
+                  />
                   <span className="text-sm text-blue-300">{sponsor.name}</span>
                 </div>
               ))}
@@ -149,7 +135,7 @@ export default function EventDetail({ event, onBack }: EventDetailProps) {
 
           <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden">
             <iframe
-              src={`https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15007.59326670526!2d${event.coordinates.lng}!3d${event.coordinates.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2s!4v1652893703651!5m2!1sen!2s`}
+              src={`https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15007.59326670526!2d${event.coordinates.lng}!3d${event.coordinates.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2s!4v1652893703651!5m2!1ses!2s`}
               width="100%"
               height="100%"
               style={{ border: 0 }}
@@ -160,7 +146,7 @@ export default function EventDetail({ event, onBack }: EventDetailProps) {
           </div>
         </CardContent>
         <CardFooter>
-          <Button 
+          <Button
             className="w-full bg-green-400 text-black hover:bg-green-500"
             onClick={handleRegister}
             disabled={isRegistering}

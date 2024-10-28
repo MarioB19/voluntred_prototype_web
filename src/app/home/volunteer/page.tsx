@@ -1,69 +1,70 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Home, Search, Calendar, User, Menu, Bell, X, LogOut, Network, FileText } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Home, Search, Calendar, User, Menu, Bell, X, LogOut, Network, FileText } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
-import Dashboard from "@/components/volunteer/Dashboard"
-import ExploreEvents from "@/components/volunteer/ExploreEvents"
-import PersonalCalendar from "@/components/volunteer/PersonalCalendar"
-import Profile from "@/components/volunteer/Profile"
-import Social from "@/components/volunteer/Social"
-import Reports from "@/components/volunteer/Reports"
+import Dashboard from "@/components/volunteer/Dashboard";
+import ExploreEvents from "@/components/volunteer/ExploreEvents";
+import PersonalCalendar from "@/components/volunteer/PersonalCalendar";
+import Profile from "@/components/volunteer/Profile";
+import Social from "@/components/volunteer/Social";
+import Reports from "@/components/volunteer/Reports";
 
-import { useRouter, usePathname } from 'next/navigation'
-
+import { useRouter, usePathname } from 'next/navigation';
 
 const pageTransition = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: -20 },
-}
+};
 
-export default function VolunteerHomePage(){
-  const [activePage, setActivePage] = useState("dashboard")
-  const [isScrolled, setIsScrolled] = useState(false)
+type PageKey = 'dashboard' | 'explore' | 'calendar' | 'social' | 'profile' | 'reports';
 
-  const router = useRouter()
-  const pathname = usePathname()
+export default function VolunteerHomePage() {
+  const [activePage, setActivePage] = useState<PageKey>('dashboard');
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     if (pathname === '/profile') {
-      setActivePage('profile')
+      setActivePage('profile');
     } else if (pathname === '/') {
-      setActivePage('dashboard')
+      setActivePage('dashboard');
     } else if (pathname === '/explore') {
-      setActivePage('explore')
+      setActivePage('explore');
     } else if (pathname === '/calendar') {
-      setActivePage('calendar')
+      setActivePage('calendar');
     } else if (pathname === '/social') {
-      setActivePage('social')
+      setActivePage('social');
     } else if (pathname === '/reports') {
-      setActivePage('reports')
+      setActivePage('reports');
     }
-  }, [pathname])
+  }, [pathname]);
 
-  const pages = {
+  const pages: Record<PageKey, JSX.Element> = {
     dashboard: <Dashboard />,
     explore: <ExploreEvents />,
     calendar: <PersonalCalendar />,
     social: <Social />,
     profile: <Profile />,
     reports: <Reports />,
-  }
+  };
 
   const navItems = [
     { id: "dashboard", icon: Home, label: "Inicio" },
@@ -71,16 +72,15 @@ export default function VolunteerHomePage(){
     { id: "calendar", icon: Calendar, label: "Calendario" },
     { id: "social", icon: Network, label: "Social" },
     { id: "profile", icon: User, label: "Perfil" },
-  ]
-
+  ];
 
   const handleProfileClick = () => {
-    setActivePage("profile")
-  }
+    setActivePage("profile");
+  };
 
   const handleLogout = async () => {
-    router.push('/')
-  }
+    router.push('/');
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-black text-white">
@@ -110,7 +110,7 @@ export default function VolunteerHomePage(){
                           key={item.id}
                           variant="ghost"
                           className="w-full justify-start text-left text-white hover:text-green-400 hover:bg-blue-900"
-                          onClick={() => setActivePage(item.id)}
+                          onClick={() => setActivePage(item.id as PageKey)}
                         >
                           <item.icon className="mr-2 h-5 w-5" />
                           {item.label}
@@ -149,14 +149,14 @@ export default function VolunteerHomePage(){
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56 bg-gray-900 border border-blue-500" align="end" forceMount>
-                <DropdownMenuItem 
+                <DropdownMenuItem
                   onClick={handleProfileClick}
                   className="text-white hover:text-green-400 hover:bg-blue-900 cursor-pointer"
                 >
                   <User className="mr-2 h-4 w-4" />
                   <span>Perfil</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem 
+                <DropdownMenuItem
                   onClick={handleLogout}
                   className="text-white hover:text-green-400 hover:bg-blue-900 cursor-pointer"
                 >
@@ -196,7 +196,7 @@ export default function VolunteerHomePage(){
                       ? "text-green-400 border-t-2 border-green-400"
                       : "text-white hover:text-green-400"
                   }`}
-                  onClick={() => setActivePage(item.id)}
+                  onClick={() => setActivePage(item.id as PageKey)}
                 >
                   <motion.div
                     className="flex flex-col items-center"
@@ -213,5 +213,5 @@ export default function VolunteerHomePage(){
         </div>
       </nav>
     </div>
-  )
+  );
 }

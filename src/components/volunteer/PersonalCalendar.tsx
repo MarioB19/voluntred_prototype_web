@@ -9,8 +9,9 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
 import { Star, Clock, MapPin, ChevronRight } from "lucide-react"
 import EventDetail from "./EventDetail"
+import { Event } from "@/lib/types"
 
-const scheduledEvents = [
+const scheduledEvents: Event[] = [
     {
       id: 1,
       title: "Limpieza de Playa",
@@ -117,19 +118,27 @@ const scheduledEvents = [
 
   
 
-export default function PersonalCalendar() {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
-  const [selectedEvent, setSelectedEvent] = useState<typeof scheduledEvents[0] | null>(null)
 
-  // Mover la declaración de eventsForSelectedDate antes del useEffect
-  const eventsForSelectedDate = scheduledEvents.filter(
-    event => selectedDate && event.date.toDateString() === selectedDate.toDateString()
-  );
+export default function PersonalCalendar() {
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date())
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null)
+
+  const isSameDate = (date1: Date, date2: Date) => {
+    return (
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate()
+    )
+  }
+
+  const eventsForSelectedDate = scheduledEvents.filter((event) =>
+    isSameDate(event.date, selectedDate)
+  )
 
   useEffect(() => {
-    console.log("Fecha seleccionada:", selectedDate);
-    console.log("Eventos para la fecha seleccionada:", eventsForSelectedDate);
-  }, [selectedDate, eventsForSelectedDate]);
+    console.log("Fecha seleccionada:", selectedDate)
+    console.log("Eventos para la fecha seleccionada:", eventsForSelectedDate)
+  }, [selectedDate, eventsForSelectedDate])
 
   return (
     <motion.div
@@ -153,22 +162,16 @@ export default function PersonalCalendar() {
               selected={selectedDate}
               onSelect={(date) => {
                 if (date) {
-                  setSelectedDate(date);
-                  console.log("Fecha seleccionada:", date);
+                  setSelectedDate(date)
                 }
               }}
               className="rounded-md border border-blue-500"
-              // Personalización de días con eventos
               modifiers={{
                 hasEvent: (date) =>
-                  scheduledEvents.some(
-                    (event) => event.date.toDateString() === date.toDateString()
-                  ),
+                  scheduledEvents.some((event) => isSameDate(event.date, date)),
               }}
               modifiersClassNames={{
-                hasEvent: "border-green-400 border-2",
-                selected: "bg-green-500 text-white",
-                today: "bg-blue-500 text-white",
+                hasEvent: "text-green-400 font-bold underline",
               }}
             />
           </CardContent>
@@ -247,7 +250,8 @@ export default function PersonalCalendar() {
                   </Badge>
                 </div>
                 <p className="mt-2 text-sm text-gray-300 flex items-center">
-                  <span className="font-semibold text-green-400 mr-2">Impacto:</span> {event.impact}
+                  <span className="font-semibold text-green-400 mr-2">Impacto:</span>{" "}
+                  {event.impact}
                 </p>
               </motion.div>
             ))}
@@ -259,6 +263,7 @@ export default function PersonalCalendar() {
       <AnimatePresence>
         {selectedEvent && (
           <motion.div
+            key={selectedEvent.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
