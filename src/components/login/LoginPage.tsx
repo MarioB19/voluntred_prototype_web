@@ -18,7 +18,7 @@ export default function LoginPage() {
     e.preventDefault()
     // Here you would typically handle the login logic
     // For now, we'll just redirect to the home/volunteer page
-    router.push('/home/ngo')
+    router.push('/home/volunteer')
   }
 
   return (
