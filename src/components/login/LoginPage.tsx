@@ -7,18 +7,31 @@ import { Input } from "@/components/ui/input"
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showDialog, setShowDialog] = useState(false)
   const router = useRouter()
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     // Here you would typically handle the login logic
-    // For now, we'll just redirect to the home/volunteer page
-    router.push('/home/volunteer')
+    // For now, we'll just show the dialog
+    setShowDialog(true)
+  }
+
+  const handleNavigate = (path: string) => {
+    setShowDialog(false)
+    router.push(path)
   }
 
   return (
@@ -162,6 +175,26 @@ export default function LoginPage() {
           </Link>
         </p>
       </motion.div>
+
+      {/* Dialog for choosing home page */}
+      <Dialog open={showDialog} onOpenChange={setShowDialog}>
+        <DialogContent className="bg-gray-800 text-white">
+          <DialogHeader>
+            <DialogTitle>Bienvenido a VoluntRED</DialogTitle>
+            <DialogDescription>
+              Por favor, selecciona tu página de inicio:
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-center space-x-4 mt-4">
+            <Button onClick={() => handleNavigate('/home/volunteer')} className="bg-green-500 hover:bg-green-600 text-white">
+              Voluntario
+            </Button>
+            <Button onClick={() => handleNavigate('/home/ngo')} className="bg-blue-500 hover:bg-blue-600 text-white">
+              ONG
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
