@@ -12,7 +12,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import NGODashboard from "@/components/ngo/Dashboard"
 import NGOEventManagement from "@/components/ngo/EventManagment"
 import NGOCollaborations from "@/components/ngo/Collaborations"
-import NGOImpact from "@/components/ngo/Impact"
+import NGOImpact from "@/components/ngo/Impact/ImpactAndStatics"
 import NGOProfile from "@/components/ngo/Profile"
 
 import { useRouter, usePathname } from 'next/navigation'
