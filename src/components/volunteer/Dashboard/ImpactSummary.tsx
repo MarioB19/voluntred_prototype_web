@@ -5,10 +5,8 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Button } from "@/components/ui/button"
-import { Sparkles, TrendingUp, Users, Clock } from "lucide-react"
-import { impactStats } from "@/data/volunteer/dashboard"
-
-const icons = [Clock, Users, TrendingUp]
+import { Sparkles, TrendingUp } from "lucide-react"
+import { impactStats, ImpactStat } from "@/data/volunteer/dashboard"
 
 export default function ImpactSummary() {
   const [hoveredStat, setHoveredStat] = useState<number | null>(null)
@@ -23,8 +21,8 @@ export default function ImpactSummary() {
       </CardHeader>
       <CardContent className="p-4">
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 mb-6">
-          {impactStats.map((stat, index) => {
-            const Icon = icons[index % icons.length]
+          {impactStats.map((stat: ImpactStat, index: number) => {
+            const Icon = stat.icon
             return (
               <motion.div 
                 key={index}

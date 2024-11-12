@@ -102,13 +102,22 @@ export interface ImpactStat {
     ],
   }
   
-  export const impactStats: ImpactStat[] = [
-    { label: 'Total Hours', value: 25000 },
-    { label: 'Volunteers', value: 2500 },
-    { label: 'Beneficiaries', value: 50000 },
-    { label: 'Registered People', value: 3000 },
+  import { Clock, Users, TrendingUp, Award, Target } from "lucide-react"
+  import { LucideIcon } from "lucide-react"
   
-  ]
+  export interface ImpactStat {
+    label: string;
+    value: number;
+    icon: LucideIcon;
+  }
+  
+  export const impactStats: ImpactStat[] = [
+    { label: 'Horas Totales Voluntariadas', value: 120, icon: Clock },
+    { label: 'Eventos en los que ha Participado', value: 15, icon: Users },
+    { label: 'Personas Impactadas Directamente', value: 250, icon: TrendingUp },
+    { label: 'Capacitaciones Completadas', value: 5, icon: Award },
+    { label: 'ODS Impactadas', value: 7, icon: Target },
+  ];
   
   export const recommendedEvents: RecommendedEvent[] = [
     {
