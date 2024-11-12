@@ -14,7 +14,7 @@ import ExploreEvents from "@/components/volunteer/ExploreEvents/ExploreEvents";
 import PersonalCalendar from "@/components/volunteer/PersonalCalendar/PersonalCalendar";
 import Profile from "@/components/volunteer/Profile/Profile";
 import Social from "@/components/volunteer/Social/Social";
-import Reports from "@/components/volunteer/Reports";
+import Reports from "@/components/volunteer/Reports/Reports";
 
 import { useRouter, usePathname } from 'next/navigation';
 
