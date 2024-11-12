@@ -1,61 +1,61 @@
 "use client"
 
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Home, Search, Calendar, User, Menu, Bell, X, LogOut, Network, FileText } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import React, { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { Home, Search, Calendar, User, Menu, Bell, X, LogOut, Network, FileText } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
-import Dashboard from "@/components/volunteer/Dashboard/Dashboard";
-import ExploreEvents from "@/components/volunteer/ExploreEvents/ExploreEvents";
-import PersonalCalendar from "@/components/volunteer/PersonalCalendar/PersonalCalendar";
-import Profile from "@/components/volunteer/Profile/Profile";
-import Social from "@/components/volunteer/Social/Social";
-import Reports from "@/components/volunteer/Reports/Reports";
+import Dashboard from "@/components/volunteer/Dashboard/Dashboard"
+import ExploreEvents from "@/components/volunteer/ExploreEvents/ExploreEvents"
+import PersonalCalendar from "@/components/volunteer/PersonalCalendar/PersonalCalendar"
+import Profile from "@/components/volunteer/Profile/Profile"
+import Social from "@/components/volunteer/Social/Social"
+import Reports from "@/components/volunteer/Reports/Reports"
 
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation'
 
 const pageTransition = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: -20 },
-};
+}
 
-type PageKey = 'dashboard' | 'explore' | 'calendar' | 'social' | 'profile' | 'reports';
+type PageKey = 'dashboard' | 'explore' | 'calendar' | 'social' | 'profile' | 'reports'
 
 export default function VolunteerHomePage() {
-  const [activePage, setActivePage] = useState<PageKey>('dashboard');
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [activePage, setActivePage] = useState<PageKey>('dashboard')
+  const [isScrolled, setIsScrolled] = useState(false)
 
-  const router = useRouter();
-  const pathname = usePathname();
+  const router = useRouter()
+  const pathname = usePathname()
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+      setIsScrolled(window.scrollY > 10)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   useEffect(() => {
     if (pathname === '/profile') {
-      setActivePage('profile');
+      setActivePage('profile')
     } else if (pathname === '/') {
-      setActivePage('dashboard');
+      setActivePage('dashboard')
     } else if (pathname === '/explore') {
-      setActivePage('explore');
+      setActivePage('explore')
     } else if (pathname === '/calendar') {
-      setActivePage('calendar');
+      setActivePage('calendar')
     } else if (pathname === '/social') {
-      setActivePage('social');
+      setActivePage('social')
     } else if (pathname === '/reports') {
-      setActivePage('reports');
+      setActivePage('reports')
     }
-  }, [pathname]);
+  }, [pathname])
 
   const pages: Record<PageKey, JSX.Element> = {
     dashboard: <Dashboard />,
@@ -64,7 +64,7 @@ export default function VolunteerHomePage() {
     social: <Social />,
     profile: <Profile />,
     reports: <Reports />,
-  };
+  }
 
   const navItems = [
     { id: "dashboard", icon: Home, label: "Inicio" },
@@ -72,15 +72,15 @@ export default function VolunteerHomePage() {
     { id: "calendar", icon: Calendar, label: "Calendario" },
     { id: "social", icon: Network, label: "Social" },
     { id: "profile", icon: User, label: "Perfil" },
-  ];
+  ]
 
   const handleProfileClick = () => {
-    setActivePage("profile");
-  };
+    setActivePage("profile")
+  }
 
   const handleLogout = async () => {
-    router.push('/');
-  };
+    router.push('/')
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-black text-white">
@@ -184,34 +184,48 @@ export default function VolunteerHomePage() {
         </AnimatePresence>
       </main>
 
-      <nav className="sticky bottom-0 bg-gray-900 border-t border-blue-500 shadow-lg">
-        <div className="container mx-auto px-4">
-          <ul className="flex justify-around">
+      <motion.nav 
+        className="sticky bottom-0 bg-gradient-to-t from-gray-900 via-gray-800 to-transparent border-t border-blue-500/20 shadow-lg"
+        initial={{ y: 100 }}
+        animate={{ y: 0 }}
+        transition={{ type: "spring", stiffness: 260, damping: 20 }}
+      >
+        <div className="container mx-auto px-2 py-1">
+          <ul className="flex justify-around items-center">
             {navItems.map((item) => (
-              <li key={item.id} className="flex-1">
+              <li key={item.id} className="relative">
                 <Button
                   variant="ghost"
-                  className={`w-full py-3 px-1 rounded-none ${
+                  className={`w-12 h-12 rounded-full flex flex-col items-center justify-center transition-all duration-300 ${
                     activePage === item.id
-                      ? "text-green-400 border-t-2 border-green-400"
-                      : "text-white hover:text-green-400"
+                      ? "text-green-400 bg-gray-800/50 shadow-inner"
+                      : "text-white hover:text-green-400 hover:bg-gray-800/30"
                   }`}
                   onClick={() => setActivePage(item.id as PageKey)}
+                  aria-label={item.label}
                 >
                   <motion.div
                     className="flex flex-col items-center"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                   >
-                    <item.icon className="h-5 w-5 mb-1" />
-                    <span className="text-xs">{item.label}</span>
+                    <item.icon className="h-5 w-5" />
+                    <span className="text-[10px] font-medium mt-0.5">{item.label}</span>
                   </motion.div>
                 </Button>
+                {activePage === item.id && (
+                  <motion.div
+                    className="absolute -top-1 left-1/2 w-1 h-1 bg-green-400 rounded-full"
+                    layoutId="activeTab"
+                    initial={{ x: "-50%" }}
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
               </li>
             ))}
           </ul>
         </div>
-      </nav>
+      </motion.nav>
     </div>
-  );
+  )
 }
