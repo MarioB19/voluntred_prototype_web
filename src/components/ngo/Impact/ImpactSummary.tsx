@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Pie, Bar } from 'react-chartjs-2'
-import { ImpactData } from '@/data/ngo/dashboard'
+import { ImpactData } from '@/data/ngo/Impacto'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from "@/components/ui/button"
 import { ChevronDown, ChevronUp } from 'lucide-react'

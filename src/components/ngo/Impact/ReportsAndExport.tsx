@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils"
 import { format } from "date-fns"
 import { CalendarIcon, Download, Send, ChevronDown, ChevronUp } from 'lucide-react'
 import { Line } from 'react-chartjs-2'
-import { ImpactData } from '@/data/ngo/dashboard'
+import { ImpactData } from '@/data/ngo/Impacto'
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js'
 import { motion, AnimatePresence } from 'framer-motion'
 

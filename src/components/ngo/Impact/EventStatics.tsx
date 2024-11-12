@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Bar, Doughnut } from 'react-chartjs-2'
-import { Event, EventStatisticsData } from '@/data/ngo/dashboard'
+import { Event, EventStatisticsData } from '@/data/ngo/Impacto'
 import { ChevronDown, ChevronUp, ThumbsUp, ThumbsDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { motion, AnimatePresence } from 'framer-motion'

@@ -6,7 +6,7 @@ import { subYears } from "date-fns"
 import { ImpactSummary } from './ImpactSummary'
 import { EventStatistics } from './EventStatics'
 import { ReportsAndExport } from './ReportsAndExport'
-import { impactData, eventsList, eventStatisticsData } from '@/data/ngo/dashboard'
+import { impactData, eventsList, eventStatisticsData } from '@/data/ngo/Impacto'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title, PointElement, LineElement } from 'chart.js'
 import { motion } from 'framer-motion'
 import { Card, CardContent } from "@/components/ui/card"
