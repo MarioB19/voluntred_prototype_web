@@ -10,7 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 import Dashboard from "@/components/volunteer/Dashboard/Dashboard";
-import ExploreEvents from "@/components/volunteer/ExploreEvents";
+import ExploreEvents from "@/components/volunteer/ExploreEvents/ExploreEvents";
 import PersonalCalendar from "@/components/volunteer/PersonalCalendar";
 import Profile from "@/components/volunteer/Profile";
 import Social from "@/components/volunteer/Social";
