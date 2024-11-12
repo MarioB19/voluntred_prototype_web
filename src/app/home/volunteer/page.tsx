@@ -12,7 +12,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import Dashboard from "@/components/volunteer/Dashboard/Dashboard";
 import ExploreEvents from "@/components/volunteer/ExploreEvents/ExploreEvents";
 import PersonalCalendar from "@/components/volunteer/PersonalCalendar/PersonalCalendar";
-import Profile from "@/components/volunteer/Profile";
+import Profile from "@/components/volunteer/Profile/Profile";
 import Social from "@/components/volunteer/Social";
 import Reports from "@/components/volunteer/Reports";
 
