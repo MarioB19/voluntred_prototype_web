@@ -10,7 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
 import NGODashboard from "@/components/ngo/Dashboard"
-import NGOEventManagement from "@/components/ngo/EventManagment"
+import NGOEventManagement from "@/components/ngo/Events/NGOEventMagment"
 import NGOCollaborations from "@/components/ngo/Collaborations/NGOCollaborations"
 import NGOImpact from "@/components/ngo/Impact/ImpactAndStatics"
 import NGOProfile from "@/components/ngo/Profile"

@@ -77,9 +77,7 @@ export default function RegisterPage() {
   }
 
   const handleSocialLogin = (provider: 'google' | 'facebook') => {
-    // Here you would implement the actual social login logic
-    console.log(`Logging in with ${provider}`)
-    // For demonstration, we'll just show a dialog
+  
     setDialogContent({
       title: "Inicio de sesión social",
       description: `Has iniciado sesión con ${provider === 'google' ? 'Google' : 'Facebook'}.`
