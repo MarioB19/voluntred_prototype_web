@@ -6,7 +6,8 @@ import { Pie, Bar } from 'react-chartjs-2'
 import { ImpactData } from '@/data/ngo/Impacto'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from "@/components/ui/button"
-import { ChevronDown, ChevronUp } from 'lucide-react'
+import { ChevronDown, ChevronUp, Clock, Users, Heart, UserPlus, Target, TrendingUp } from 'lucide-react'
+import { Separator } from "@/components/ui/separator"
 
 export const ImpactSummary: React.FC<{ data: ImpactData }> = ({ data }) => {
   const [expandedCard, setExpandedCard] = useState<string | null>(null)
@@ -17,11 +18,11 @@ export const ImpactSummary: React.FC<{ data: ImpactData }> = ({ data }) => {
       {
         data: data.odsImpact.map((item) => item.value),
         backgroundColor: [
-          'rgba(255, 99, 132, 0.6)',
-          'rgba(54, 162, 235, 0.6)',
-          'rgba(255, 206, 86, 0.6)',
-          'rgba(75, 192, 192, 0.6)',
-          'rgba(153, 102, 255, 0.6)',
+          'rgba(56, 189, 248, 0.6)',
+          'rgba(52, 211, 153, 0.6)',
+          'rgba(251, 146, 60, 0.6)',
+          'rgba(249, 115, 22, 0.6)',
+          'rgba(236, 72, 153, 0.6)',
         ],
       },
     ],
@@ -33,17 +34,17 @@ export const ImpactSummary: React.FC<{ data: ImpactData }> = ({ data }) => {
       {
         label: 'Horas de Voluntariado',
         data: data.monthlyData.map((item) => item.hours),
-        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+        backgroundColor: 'rgba(56, 189, 248, 0.6)',
       },
       {
         label: 'Voluntarios',
         data: data.monthlyData.map((item) => item.volunteers),
-        backgroundColor: 'rgba(255, 99, 132, 0.6)',
+        backgroundColor: 'rgba(52, 211, 153, 0.6)',
       },
       {
         label: 'Beneficiarios',
         data: data.monthlyData.map((item) => item.beneficiaries),
-        backgroundColor: 'rgba(255, 206, 86, 0.6)',
+        backgroundColor: 'rgba(251, 146, 60, 0.6)',
       },
     ],
   }
@@ -53,11 +54,14 @@ export const ImpactSummary: React.FC<{ data: ImpactData }> = ({ data }) => {
   }
 
   return (
-    <div className="space-y-4">
-      <Card className="bg-gray-800 border-blue-500 shadow-lg">
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle className="text-lg font-semibold text-green-400">Métricas Generales</CardTitle>
-          <Button variant="ghost" size="sm" onClick={() => toggleCard('metrics')}>
+    <div className="space-y-6">
+      <Card className="bg-gray-800 border-blue-500 shadow-lg hover:shadow-blue-500/20 transition-shadow duration-300">
+        <CardHeader className="flex flex-row items-center justify-between pb-2 border-b border-gray-700">
+          <CardTitle className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 flex items-center">
+            <Target className="mr-2 h-5 w-5" />
+            Métricas Generales
+          </CardTitle>
+          <Button variant="ghost" size="sm" onClick={() => toggleCard('metrics')} className="text-blue-400 hover:text-blue-300">
             {expandedCard === 'metrics' ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
           </Button>
         </CardHeader>
@@ -69,20 +73,36 @@ export const ImpactSummary: React.FC<{ data: ImpactData }> = ({ data }) => {
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <CardContent>
-                <div className="space-y-3">
-                  <p className="text-sm sm:text-base text-gray-300">
-                    Total de horas de voluntariado: <span className="text-white font-bold">{data.totalHours}</span>
-                  </p>
-                  <p className="text-sm sm:text-base text-gray-300">
-                    Número de voluntarios: <span className="text-white font-bold">{data.volunteers}</span>
-                  </p>
-                  <p className="text-sm sm:text-base text-gray-300">
-                    Beneficiarios impactados: <span className="text-white font-bold">{data.beneficiaries}</span>
-                  </p>
-                  <p className="text-sm sm:text-base text-gray-300">
-                    Personas registradas: <span className="text-white font-bold">{data.registeredPeople}</span>
-                  </p>
+              <CardContent className="pt-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="flex items-center space-x-3">
+                    <Clock className="h-8 w-8 text-blue-400" />
+                    <div>
+                      <p className="text-sm text-gray-400">Total de horas de voluntariado</p>
+                      <p className="text-lg font-bold text-white">{data.totalHours}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <Users className="h-8 w-8 text-green-400" />
+                    <div>
+                      <p className="text-sm text-gray-400">Número de voluntarios</p>
+                      <p className="text-lg font-bold text-white">{data.volunteers}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <Heart className="h-8 w-8 text-red-400" />
+                    <div>
+                      <p className="text-sm text-gray-400">Beneficiarios impactados</p>
+                      <p className="text-lg font-bold text-white">{data.beneficiaries}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <UserPlus className="h-8 w-8 text-yellow-400" />
+                    <div>
+                      <p className="text-sm text-gray-400">Personas registradas</p>
+                      <p className="text-lg font-bold text-white">{data.registeredPeople}</p>
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </motion.div>
@@ -90,10 +110,13 @@ export const ImpactSummary: React.FC<{ data: ImpactData }> = ({ data }) => {
         </AnimatePresence>
       </Card>
 
-      <Card className="bg-gray-800 border-blue-500 shadow-lg">
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle className="text-lg font-semibold text-green-400">ODS Impactados</CardTitle>
-          <Button variant="ghost" size="sm" onClick={() => toggleCard('ods')}>
+      <Card className="bg-gray-800 border-blue-500 shadow-lg hover:shadow-blue-500/20 transition-shadow duration-300">
+        <CardHeader className="flex flex-row items-center justify-between pb-2 border-b border-gray-700">
+          <CardTitle className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 flex items-center">
+            <Target className="mr-2 h-5 w-5" />
+            ODS Impactados
+          </CardTitle>
+          <Button variant="ghost" size="sm" onClick={() => toggleCard('ods')} className="text-blue-400 hover:text-blue-300">
             {expandedCard === 'ods' ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
           </Button>
         </CardHeader>
@@ -105,7 +128,7 @@ export const ImpactSummary: React.FC<{ data: ImpactData }> = ({ data }) => {
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <CardContent>
+              <CardContent className="pt-4">
                 <div className="h-64 sm:h-80">
                   <Pie
                     data={pieChartData}
@@ -133,10 +156,13 @@ export const ImpactSummary: React.FC<{ data: ImpactData }> = ({ data }) => {
         </AnimatePresence>
       </Card>
 
-      <Card className="bg-gray-800 border-blue-500 shadow-lg">
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle className="text-lg font-semibold text-green-400">Tendencias Mensuales</CardTitle>
-          <Button variant="ghost" size="sm" onClick={() => toggleCard('trends')}>
+      <Card className="bg-gray-800 border-blue-500 shadow-lg hover:shadow-blue-500/20 transition-shadow duration-300">
+        <CardHeader className="flex flex-row items-center justify-between pb-2 border-b border-gray-700">
+          <CardTitle className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 flex items-center">
+            <TrendingUp className="mr-2 h-5 w-5" />
+            Tendencias Mensuales
+          </CardTitle>
+          <Button variant="ghost" size="sm" onClick={() => toggleCard('trends')} className="text-blue-400 hover:text-blue-300">
             {expandedCard === 'trends' ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
           </Button>
         </CardHeader>
@@ -148,7 +174,7 @@ export const ImpactSummary: React.FC<{ data: ImpactData }> = ({ data }) => {
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <CardContent>
+              <CardContent className="pt-4">
                 <div className="h-80 sm:h-96">
                   <Bar
                     data={barChartData}

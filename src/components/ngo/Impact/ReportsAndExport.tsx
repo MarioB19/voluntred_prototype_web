@@ -8,9 +8,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Checkbox } from "@/components/ui/checkbox"
 import { cn } from "@/lib/utils"
 import { format } from "date-fns"
-import { CalendarIcon, Download, Send, ChevronDown, ChevronUp } from 'lucide-react'
+import { CalendarIcon, Download, Send, ChevronDown, ChevronUp, FileText, BarChart2, Mail } from 'lucide-react'
 import { Line } from 'react-chartjs-2'
 import { ImpactData } from '@/data/ngo/Impacto'
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js'
@@ -58,8 +59,8 @@ export const ReportsAndExport: React.FC<ReportsAndExportProps> = ({
           reportType === 'yearly'
             ? data.yearlyData.map((d) => d.hours)
             : data.monthlyData.map((d) => d.hours),
-        borderColor: 'rgb(75, 192, 192)',
-        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+        borderColor: 'rgb(56, 189, 248)',
+        backgroundColor: 'rgba(56, 189, 248, 0.5)',
       },
       {
         label: 'Voluntarios',
@@ -67,8 +68,8 @@ export const ReportsAndExport: React.FC<ReportsAndExportProps> = ({
           reportType === 'yearly'
             ? data.yearlyData.map((d) => d.volunteers)
             : data.monthlyData.map((d) => d.volunteers),
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgb(52, 211, 153)',
+        backgroundColor: 'rgba(52, 211, 153, 0.5)',
       },
       {
         label: 'Beneficiarios',
@@ -76,22 +77,25 @@ export const ReportsAndExport: React.FC<ReportsAndExportProps> = ({
           reportType === 'yearly'
             ? data.yearlyData.map((d) => d.beneficiaries)
             : data.monthlyData.map((d) => d.beneficiaries),
-        borderColor: 'rgb(255, 205, 86)',
-        backgroundColor: 'rgba(255, 205, 86, 0.5)',
+        borderColor: 'rgb(251, 146, 60)',
+        backgroundColor: 'rgba(251, 146, 60, 0.5)',
       },
     ],
   }
 
   return (
-    <Card className="bg-gray-900 border-blue-500">
-      <CardHeader>
-        <CardTitle className="text-xl font-bold text-green-400">Generar Reporte</CardTitle>
+    <Card className="bg-gradient-to-br from-gray-900 to-gray-800 border-blue-500 shadow-lg">
+      <CardHeader className="border-b border-gray-700 pb-3">
+        <CardTitle className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 flex items-center">
+          <FileText className="mr-2 h-6 w-6" />
+          Generar Reporte
+        </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6 pt-6">
         <motion.div layout className="space-y-4">
           <div className="flex justify-between items-center">
-            <Label htmlFor="date-range" className="text-base font-medium">Rango de Fechas</Label>
-            <Button variant="ghost" size="sm" onClick={() => toggleSection('dateRange')}>
+            <Label htmlFor="date-range" className="text-lg font-medium text-white">Rango de Fechas</Label>
+            <Button variant="ghost" size="sm" onClick={() => toggleSection('dateRange')} className="text-blue-400 hover:text-blue-300">
               {expandedSections.includes('dateRange') ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
             </Button>
           </div>
@@ -109,7 +113,7 @@ export const ReportsAndExport: React.FC<ReportsAndExportProps> = ({
                       id="date-range"
                       variant={'outline'}
                       className={cn(
-                        'w-full justify-start text-left font-normal bg-gray-700 border-gray-600 text-white text-sm md:text-base',
+                        'w-full justify-start text-left font-normal bg-gray-700 border-gray-600 text-white hover:bg-gray-600 hover:text-white transition-colors',
                         !dateRange && 'text-muted-foreground'
                       )}
                     >
@@ -146,8 +150,8 @@ export const ReportsAndExport: React.FC<ReportsAndExportProps> = ({
 
         <motion.div layout className="space-y-4">
           <div className="flex justify-between items-center">
-            <Label htmlFor="report-type" className="text-base font-medium">Tipo de Reporte</Label>
-            <Button variant="ghost" size="sm" onClick={() => toggleSection('reportType')}>
+            <Label htmlFor="report-type" className="text-lg font-medium text-white">Tipo de Reporte</Label>
+            <Button variant="ghost" size="sm" onClick={() => toggleSection('reportType')} className="text-blue-400 hover:text-blue-300">
               {expandedSections.includes('reportType') ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
             </Button>
           </div>
@@ -163,12 +167,12 @@ export const ReportsAndExport: React.FC<ReportsAndExportProps> = ({
                   value={reportType}
                   onValueChange={(value: 'yearly' | 'monthly') => setReportType(value)}
                 >
-                  <SelectTrigger id="report-type" className="bg-gray-700 border-gray-600 text-white text-sm md:text-base w-full">
+                  <SelectTrigger id="report-type" className="bg-gray-700 border-gray-600 text-white hover:bg-gray-600 hover:text-white transition-colors w-full">
                     <SelectValue>{reportType === 'yearly' ? 'Anual' : 'Mensual'}</SelectValue>
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="yearly">Anual</SelectItem>
-                    <SelectItem value="monthly">Mensual</SelectItem>
+                  <SelectContent className="bg-gray-800 border-gray-700">
+                    <SelectItem value="yearly" className="text-white hover:bg-gray-700">Anual</SelectItem>
+                    <SelectItem value="monthly" className="text-white hover:bg-gray-700">Mensual</SelectItem>
                   </SelectContent>
                 </Select>
               </motion.div>
@@ -178,8 +182,11 @@ export const ReportsAndExport: React.FC<ReportsAndExportProps> = ({
 
         <motion.div layout className="space-y-4">
           <div className="flex justify-between items-center">
-            <CardTitle className="text-lg font-semibold text-green-400">Vista Previa del Reporte</CardTitle>
-            <Button variant="ghost" size="sm" onClick={() => toggleSection('preview')}>
+            <CardTitle className="text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 flex items-center">
+              <BarChart2 className="mr-2 h-5 w-5" />
+              Vista Previa del Reporte
+            </CardTitle>
+            <Button variant="ghost" size="sm" onClick={() => toggleSection('preview')} className="text-blue-400 hover:text-blue-300">
               {expandedSections.includes('preview') ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
             </Button>
           </div>
@@ -191,7 +198,7 @@ export const ReportsAndExport: React.FC<ReportsAndExportProps> = ({
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <Card className="bg-gray-800 border-gray-700">
+                <Card className="bg-gray-800 border-gray-700 shadow-lg">
                   <CardContent className="p-4">
                     <div className="h-[300px] sm:h-[400px]">
                       <Line
@@ -231,8 +238,8 @@ export const ReportsAndExport: React.FC<ReportsAndExportProps> = ({
 
         <motion.div layout className="space-y-4">
           <div className="flex justify-between items-center">
-            <Label htmlFor="report-content" className="text-base font-medium">Contenido del Reporte</Label>
-            <Button variant="ghost" size="sm" onClick={() => toggleSection('content')}>
+            <Label htmlFor="report-content" className="text-lg font-medium text-white">Contenido del Reporte</Label>
+            <Button variant="ghost" size="sm" onClick={() => toggleSection('content')} className="text-blue-400 hover:text-blue-300">
               {expandedSections.includes('content') ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
             </Button>
           </div>
@@ -252,7 +259,7 @@ export const ReportsAndExport: React.FC<ReportsAndExportProps> = ({
                     'Comentarios de Voluntarios',
                   ].map((item) => (
                     <div key={item} className="flex items-center space-x-2">
-                      <input type="checkbox" id={item} className="bg-gray-700 border-gray-600" />
+                      <Checkbox id={item} className="bg-gray-700 border-gray-600" />
                       <label htmlFor={item} className="text-sm text-gray-300">
                         {item}
                       </label>
@@ -265,23 +272,26 @@ export const ReportsAndExport: React.FC<ReportsAndExportProps> = ({
         </motion.div>
 
         <div className="space-y-4">
-          <Button className="w-full bg-blue-500 hover:bg-blue-600 text-base">
+          <Button className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white transition-colors">
             <Download className="mr-2 h-5 w-5" /> Exportar como PDF
           </Button>
-          <Button className="w-full bg-green-500 hover:bg-green-600 text-base">
+          <Button className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white transition-colors">
             <Download className="mr-2 h-5 w-5" /> Exportar como Excel
           </Button>
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="email" className="text-base font-medium">Enviar Reporte por Correo</Label>
+          <Label htmlFor="email" className="text-lg font-medium text-white flex items-center">
+            <Mail className="mr-2 h-5 w-5" />
+            Enviar Reporte por Correo
+          </Label>
           <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
             <Input
               id="email"
               placeholder="Correo electrónico"
-              className="bg-gray-700 border-gray-600 text-white text-sm md:text-base flex-grow"
+              className="bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500"
             />
-            <Button className="bg-purple-500 hover:bg-purple-600 text-base whitespace-nowrap">
+            <Button className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white transition-colors whitespace-nowrap">
               <Send className="mr-2 h-5 w-5" /> Enviar
             </Button>
           </div>
