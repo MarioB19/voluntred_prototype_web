@@ -127,7 +127,7 @@ export default function NGOHomePage() {
               size="icon"
               className="text-white hover:text-green-400"
             >
-              <FileText className="h-6 w-6" />
+             
             </Button>
             <Button variant="ghost" size="icon" className="relative text-white hover:text-green-400">
               <Bell className="h-6 w-6" />

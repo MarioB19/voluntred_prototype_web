@@ -19,7 +19,7 @@ export default function EventCategory({ title, events, onSelectEvent, color }: E
   const toggleExpand = () => setIsExpanded(!isExpanded)
 
   return (
-    <Card className={`bg-gray-800 border-l-4 ${color} transition-all duration-300 ease-in-out`}>
+    <Card className={`bg-gray-800 border-l-4 ${color} transition-all duration-300 ease-in-out mb-6`}>
       <CardHeader className="flex flex-row items-center justify-between pb-2 pt-4 px-4">
         <div className="flex items-center space-x-2">
           <CardTitle className="text-xl font-bold text-white">{title}</CardTitle>
