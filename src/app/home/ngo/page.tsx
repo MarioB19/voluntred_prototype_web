@@ -2,12 +2,13 @@
 
 import React, { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Home, Calendar, User, Menu, Bell, X, LogOut, FileText, BarChart, Users } from "lucide-react"
+import { Home, Calendar, User, Menu, Bell, X, LogOut, FileText, BarChart, Users, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Input } from "@/components/ui/input"
 
 import NGODashboard from "@/components/ngo/Dashboard"
 import NGOEventManagement from "@/components/ngo/Events/NGOEventMagment"
@@ -78,87 +79,92 @@ export default function NGOHomePage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-900 text-white">
-      <header className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-gray-900/80 backdrop-blur-sm shadow-md' : 'bg-gray-900'}`}>
-        <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-          <div className="flex items-center space-x-4">
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="lg:hidden text-white hover:text-green-400">
-                  <Menu className="h-6 w-6" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="left" className="w-[300px] sm:w-[400px] bg-gray-800 border-r border-gray-700">
-                <nav className="flex flex-col h-full">
-                  <div className="flex items-center justify-between py-4 border-b border-gray-700">
-                    <h2 className="text-lg font-semibold text-green-400">Menú ONG</h2>
-                    <SheetTrigger asChild>
-                      <Button variant="ghost" size="icon" className="text-white hover:text-green-400">
-                        <X className="h-6 w-6" />
-                      </Button>
-                    </SheetTrigger>
-                  </div>
-                  <ScrollArea className="flex-grow">
-                    <div className="py-4 space-y-4">
-                      {navItems.map((item) => (
-                        <Button
-                          key={item.id}
-                          variant="ghost"
-                          className="w-full justify-start text-left text-white hover:text-green-400 hover:bg-gray-700"
-                          onClick={() => handleNavigation(item.id as PageKey)}
-                        >
-                          <item.icon className="mr-2 h-5 w-5" />
-                          {item.label}
+      <header className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-gray-900/95 backdrop-blur-sm shadow-lg' : 'bg-transparent'}`}>
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-4">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="icon" className="lg:hidden text-white hover:text-green-400">
+                    <Menu className="h-6 w-6" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="w-[300px] sm:w-[400px] bg-gray-800 border-r border-gray-700">
+                  <nav className="flex flex-col h-full">
+                    <div className="flex items-center justify-between py-4 border-b border-gray-700">
+                      <h2 className="text-lg font-semibold text-green-400">Menú ONG</h2>
+                      <SheetTrigger asChild>
+                        <Button variant="ghost" size="icon" className="text-white hover:text-green-400">
+                          <X className="h-6 w-6" />
                         </Button>
-                      ))}
+                      </SheetTrigger>
                     </div>
-                  </ScrollArea>
-                </nav>
-              </SheetContent>
-            </Sheet>
-            <h1 className="text-2xl font-bold">
-              <span className="bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent">Volunt</span>
-              <span className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">RED</span>
-              <span className="text-white"> ONG</span>
-            </h1>
-          </div>
-          <div className="flex items-center space-x-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-white hover:text-green-400"
-            >
-             
-            </Button>
-            <Button variant="ghost" size="icon" className="relative text-white hover:text-green-400">
-              <Bell className="h-6 w-6" />
-              <span className="absolute top-0 right-0 h-2 w-2 bg-green-400 rounded-full" />
-            </Button>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src="/placeholder.svg?height=32&width=32" alt="@ngo" />
-                    <AvatarFallback>ONG</AvatarFallback>
-                  </Avatar>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56 bg-gray-800 border border-gray-700" align="end" forceMount>
-                <DropdownMenuItem
-                  onClick={() => handleNavigation('profile')}
-                  className="text-white hover:text-green-400 hover:bg-gray-700 cursor-pointer"
-                >
-                  <User className="mr-2 h-4 w-4" />
-                  <span>Perfil ONG</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={handleLogout}
-                  className="text-white hover:text-green-400 hover:bg-gray-700 cursor-pointer"
-                >
-                  <LogOut className="mr-2 h-4 w-4" />
-                  <span>Cerrar sesión</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                    <ScrollArea className="flex-grow">
+                      <div className="py-4 space-y-4">
+                        {navItems.map((item) => (
+                          <Button
+                            key={item.id}
+                            variant="ghost"
+                            className="w-full justify-start text-left text-white hover:text-green-400 hover:bg-gray-700"
+                            onClick={() => handleNavigation(item.id as PageKey)}
+                          >
+                            <item.icon className="mr-2 h-5 w-5" />
+                            {item.label}
+                          </Button>
+                        ))}
+                      </div>
+                    </ScrollArea>
+                  </nav>
+                </SheetContent>
+              </Sheet>
+              <motion.h1 
+                className="text-2xl font-bold"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <span className="bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent">Volunt</span>
+                <span className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">RED</span>
+                <span className="text-white"> ONG</span>
+              </motion.h1>
+            </div>
+            <div className="hidden md:flex items-center space-x-4">
+       
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-white hover:text-green-400 relative"
+              >
+                <Bell className="h-6 w-6" />
+                <span className="absolute top-0 right-0 h-2 w-2 bg-green-400 rounded-full" />
+              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src="/placeholder.svg?height=32&width=32" alt="@ngo" />
+                      <AvatarFallback>ONG</AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56 bg-gray-800 border border-gray-700" align="end" forceMount>
+                  <DropdownMenuItem
+                    onClick={() => handleNavigation('profile')}
+                    className="text-white hover:text-green-400 hover:bg-gray-700 cursor-pointer"
+                  >
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Perfil ONG</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={handleLogout}
+                    className="text-white hover:text-green-400 hover:bg-gray-700 cursor-pointer"
+                  >
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Cerrar sesión</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </div>
         </div>
       </header>
@@ -178,34 +184,48 @@ export default function NGOHomePage() {
         </AnimatePresence>
       </main>
 
-      <nav className="sticky bottom-0 bg-gray-800 border-t border-gray-700 shadow-lg">
-        <div className="container mx-auto px-4">
-          <ul className="flex justify-around">
+      <motion.nav 
+        className="sticky bottom-0 bg-gradient-to-t from-gray-900 via-gray-800 to-transparent border-t border-green-500/20 shadow-lg"
+        initial={{ y: 100 }}
+        animate={{ y: 0 }}
+        transition={{ type: "spring", stiffness: 260, damping: 20 }}
+      >
+        <div className="container mx-auto px-2 py-1">
+          <ul className="flex justify-around items-center">
             {navItems.map((item) => (
-              <li key={item.id} className="flex-1">
+              <li key={item.id} className="relative">
                 <Button
                   variant="ghost"
-                  className={`w-full py-3 px-1 rounded-none ${
+                  className={`w-12 h-12 rounded-full flex flex-col items-center justify-center transition-all duration-300 ${
                     activePage === item.id
-                      ? "text-green-400 border-t-2 border-green-400"
-                      : "text-white hover:text-green-400"
+                      ? "text-green-400 bg-gray-800/50 shadow-inner"
+                      : "text-white hover:text-green-400 hover:bg-gray-800/30"
                   }`}
                   onClick={() => handleNavigation(item.id as PageKey)}
+                  aria-label={item.label}
                 >
                   <motion.div
                     className="flex flex-col items-center"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                   >
-                    <item.icon className="h-5 w-5 mb-1" />
-                    <span className="text-xs">{item.label}</span>
+                    <item.icon className="h-5 w-5" />
+                    <span className="text-[10px] font-medium mt-0.5">{item.label}</span>
                   </motion.div>
                 </Button>
+                {activePage === item.id && (
+                  <motion.div
+                    className="absolute -top-1 left-1/2 w-1 h-1 bg-green-400 rounded-full"
+                    layoutId="activeTab"
+                    initial={{ x: "-50%" }}
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
               </li>
             ))}
           </ul>
         </div>
-      </nav>
+      </motion.nav>
     </div>
   )
 }
