@@ -13,7 +13,7 @@ import NGODashboard from "@/components/ngo/Dashboard"
 import NGOEventManagement from "@/components/ngo/Events/NGOEventMagment"
 import NGOCollaborations from "@/components/ngo/Collaborations/NGOCollaborations"
 import NGOImpact from "@/components/ngo/Impact/ImpactAndStatics"
-import NGOProfile from "@/components/ngo/Profile"
+import NGOProfile from "@/components/ngo/Profile/NGOProfile"
 
 import { useRouter, usePathname } from 'next/navigation'
 
