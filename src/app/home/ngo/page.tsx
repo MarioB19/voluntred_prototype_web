@@ -2,13 +2,10 @@
 
 import React, { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Home, Calendar, User, Menu, Bell, X, LogOut, FileText, BarChart, Users, Search } from "lucide-react"
+import { Home, Calendar, User, Bell, LogOut, BarChart, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
 
 import NGODashboard from "@/components/ngo/Dashboard"
 import NGOEventManagement from "@/components/ngo/Events/NGOEventMagment"
@@ -82,54 +79,17 @@ export default function NGOHomePage() {
       <header className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-gray-900/95 backdrop-blur-sm shadow-lg' : 'bg-transparent'}`}>
         <div className="container mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
+            <motion.h1 
+              className="text-2xl font-bold"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <span className="bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent">Volunt</span>
+              <span className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">RED</span>
+              <span className="text-white"> ONG</span>
+            </motion.h1>
             <div className="flex items-center space-x-4">
-              <Sheet>
-                <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="lg:hidden text-white hover:text-green-400">
-                    <Menu className="h-6 w-6" />
-                  </Button>
-                </SheetTrigger>
-                <SheetContent side="left" className="w-[300px] sm:w-[400px] bg-gray-800 border-r border-gray-700">
-                  <nav className="flex flex-col h-full">
-                    <div className="flex items-center justify-between py-4 border-b border-gray-700">
-                      <h2 className="text-lg font-semibold text-green-400">Menú ONG</h2>
-                      <SheetTrigger asChild>
-                        <Button variant="ghost" size="icon" className="text-white hover:text-green-400">
-                          <X className="h-6 w-6" />
-                        </Button>
-                      </SheetTrigger>
-                    </div>
-                    <ScrollArea className="flex-grow">
-                      <div className="py-4 space-y-4">
-                        {navItems.map((item) => (
-                          <Button
-                            key={item.id}
-                            variant="ghost"
-                            className="w-full justify-start text-left text-white hover:text-green-400 hover:bg-gray-700"
-                            onClick={() => handleNavigation(item.id as PageKey)}
-                          >
-                            <item.icon className="mr-2 h-5 w-5" />
-                            {item.label}
-                          </Button>
-                        ))}
-                      </div>
-                    </ScrollArea>
-                  </nav>
-                </SheetContent>
-              </Sheet>
-              <motion.h1 
-                className="text-2xl font-bold"
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                <span className="bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent">Volunt</span>
-                <span className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">RED</span>
-                <span className="text-white"> ONG</span>
-              </motion.h1>
-            </div>
-            <div className="hidden md:flex items-center space-x-4">
-       
               <Button
                 variant="ghost"
                 size="icon"
